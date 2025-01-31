@@ -1,0 +1,135 @@
+<div class="container-fluid">
+    <div>
+        <h3>Настройки Push-уведомлений</h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">Главная</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="#">Мобильные и API настройки</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Настройки Push-уведомлений</li>
+            </ol>
+        </nav>
+    </div>
+    <!-- Вертикальный макет -->
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Настройки Push-уведомлений</h6>
+					<div class="alert alert-info">
+                        Эта система позволяет вашему скрипту отправлять push-уведомления в любое приложение, которое использует наш API.<br>
+                        Чтобы начать, <a href="https://onesignal.com/" target="_blank">зарегистрируйтесь здесь</a>.
+                    </div>
+                    <div class="email-settings-alert"></div>
+                    <form class="email-settings" method="POST">
+                        <div>
+                            <div class="float-left">
+                                <label for="push" class="main-label">Система Push-уведомлений</label>
+                                <br><small class="admin-info">Включите эту функцию, чтобы пользователи получали уведомления в браузере или приложении, даже если приложение закрыто.</small>
+                            </div>
+                            <div class="form-group float-right switcher">
+                                <input type="hidden" name="push" value="0">
+                                <input type="checkbox" name="push" id="push-enabled" value="1" <?php echo ($wo['config']['push'] == 1) ? 'checked': '';?>>
+                                <label for="push-enabled" class="check-trail"><span class="check-handler"></span></label>
+                            </div>
+                            <div class="clearfix"></div>
+                            <hr>
+                        </div>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">OneSignal APP ID</label>
+                                <input type="text" id="push_id" name="push_id" class="form-control" value="<?php echo $wo['config']['push_id'];?>">
+                                
+                            </div>
+                        </div>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">REST API Key</label>
+                                <input type="text" id="push_key" name="push_key" class="form-control" value="<?php echo $wo['config']['push_key'];?>">
+                                
+                            </div>
+                        </div>
+                        <p class="help-block">Нужна помощь? <a href="https://documentation.onesignal.com/v3.0/docs/setup" target="_blank">Читать документацию</a></p>
+                        <input type="hidden" name="hash_id" value="<?php echo Wo_CreateSession();?>">
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="clearfix"></div>
+    </div>
+    <!-- Конец вертикального макета -->
+<script>
+
+$(function() {
+    $('.switcher input[type=checkbox]').click(function () {
+        var configName = $(this).attr('name');
+        var hash_id = $('input[name=hash_id]').val();
+        var objData = {};
+        if ($(this).is(":checked") === true) {
+            objData[configName] = $(this).val();
+        }
+        else{
+            if ($('input[name='+configName+']')[0]) {
+                objData[configName] = $($('input[name='+configName+']')[0]).val();
+            }
+        }
+        objData['hash_id'] = hash_id;
+        $.post(Wo_Ajax_Requests_File() + '?f=admin_setting&s=update_general_setting', objData);
+    });
+
+    var setTimeOutColor = setTimeout(function (){});
+    $('select').on('change', function() {
+         clearTimeout(setTimeOutColor);
+        var thisElement = $(this);
+        var configName = thisElement.attr('name');
+        var hash_id = $('input[name=hash_id]').val();
+        var objData = {};
+        objData[configName] = this.value;
+        objData['hash_id'] = hash_id;
+        thisElement.addClass('warning');
+        $.post(Wo_Ajax_Requests_File() + '?f=admin_setting&s=update_general_setting', objData, function (data) {
+            if (data.status == 200) {
+                thisElement.removeClass('warning');
+                thisElement.addClass('success');
+            } else {
+                thisElement.addClass('error');
+            }
+            var setTimeOutColor = setTimeout(function () {
+                thisElement.removeClass('success');
+                thisElement.removeClass('warning');
+                thisElement.removeClass('error');
+            }, 2000);
+        });
+    });
+    $('input[type=text], input[type=number], input[type=password], textarea').on('input', delay(function() {
+            clearTimeout(setTimeOutColor);
+            var thisElement = $(this);
+            var configName = thisElement.attr('name');
+            var hash_id = $('input[name=hash_id]').val();
+            var objData = {};
+            objData[configName] = this.value;
+            objData['hash_id'] = hash_id;
+            thisElement.addClass('warning');
+            $.post(Wo_Ajax_Requests_File() + '?f=admin_setting&s=update_general_setting', objData, function (data) {
+                if (data.status == 200) {
+                    thisElement.removeClass('warning');
+                    thisElement.addClass('success');
+                } else {
+                    thisElement.addClass('error');
+                }
+                var setTimeOutColor = setTimeout(function () {
+                    thisElement.removeClass('success');
+                    thisElement.removeClass('warning');
+                    thisElement.removeClass('error');
+                }, 2000);
+                //thisElement.focus();
+            });
+    }, 500));
+});
+</script>

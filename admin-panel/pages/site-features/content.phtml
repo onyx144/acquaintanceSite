@@ -1,0 +1,356 @@
+<div class="container-fluid">
+    <div>
+        <h3>Управление функциями</h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">Главная</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="#">Настройки</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Управление функциями</li>
+            </ol>
+        </nav>
+    </div>
+    <!-- Vertical Layout -->
+    <div class="row">
+        <div class="col-lg-4 col-md-4">
+           
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Настройка системы кредитовs</h6>
+                    <div class="site-settings-alert"></div>
+                    <form class="site-settings" method="POST">
+                         <div>
+                            <div class="float-left">
+                                <label for="credit_earn_system" class="main-label">Система ежедневного заработка кредитов</label>
+                                <br><small class="admin-info">Пользователь будет зарабатывать очки и кредиты, входя в систему каждый день.</small>
+                            </div>
+                            <div class="form-group float-right switcher">
+                                <input type="hidden" name="credit_earn_system" value="0">
+                                <input type="checkbox" name="credit_earn_system" id="credit_earn_system-enabled" value="1" <?php echo ($wo['config']['credit_earn_system'] == '1') ? 'checked': '';?>>
+                                <label for="credit_earn_system-enabled" class="check-trail"><span class="check-handler"></span></label>
+                            </div>
+                            <div class="clearfix"></div>
+                            
+                        </div>
+
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Необходимое время для получения зачетных единиц</label>
+                                <input type="text" id="credit_earn_max_days" name="credit_earn_max_days" class="form-control" value="<?php echo $wo['config']['credit_earn_max_days']; ?>">
+                                <small class="admin-info">Сколько раз пользователь должен входить в систему ежедневно, чтобы получать ежедневные кредиты?</small>
+                            </div>
+                        </div>
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Кредиты, которые заработает пользователь</label>
+                                <input type="text" id="credit_earn_day_amount" name="credit_earn_day_amount" class="form-control" value="<?php echo $wo['config']['credit_earn_day_amount']; ?>">
+                                <small class="admin-info">Сколько кредитов заработает пользователь, если он зайдет на ваш сайт X раз?</small>
+                            </div>
+                        </div>
+                        <hr>
+                        <label for="user_registration" class="main-label">Сумка с кредитами</label><div class="clearfix"></div><br>
+                        <div class="form-group form-float">
+                            <div class="form-line focused">
+                                <label class="form-label">Баллы</label>
+                                <input type="text" name="bag_of_credits_amount" class="form-control" value="<?php echo $wo['config']['bag_of_credits_amount']?>">
+                                <small class="admin-info">Сколько баллов получит пользователь в этом пакете?</small>
+                            </div>
+                        </div>
+                        <div class="form-group form-float">
+                            <div class="form-line focused">
+                                <label class="form-label">Баллы <?php echo $wo['config']['currency_symbol']?></label>
+                                <input type="text" name="bag_of_credits_price" class="form-control" value="<?php echo $wo['config']['bag_of_credits_price']?>">
+                                <small class="admin-info">Установите цену, по которой будет продаваться пакет.</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+
+                        <label for="user_registration" class="main-label">Коробка с кредитами</label><div class="clearfix"></div><br>
+                        <div class="form-group form-float">
+                            <div class="form-line focused">
+                                <label class="form-label">Баллы</label>
+                                <input type="text" name="box_of_credits_amount" class="form-control" value="<?php echo $wo['config']['box_of_credits_amount']?>">
+                                <small class="admin-info">Сколько баллов получит пользователь в этом пакете?</small>
+                            </div>
+                        </div>
+                        <div class="form-group form-float">
+                            <div class="form-line focused">
+                                <label class="form-label">Цена <?php echo $wo['config']['currency_symbol']?></label>
+                                <input type="text" name="box_of_credits_price" class="form-control" value="<?php echo $wo['config']['box_of_credits_price']?>">
+                                <small class="admin-info">Установите цену, по которой будет продаваться пакет.</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+
+                        <label for="user_registration" class="main-label">Сундук с кредитами</label><div class="clearfix"></div><br>
+                        <div class="form-group form-float">
+                            <div class="form-line focused">
+                                <label class="form-label">Points</label>
+                                <input type="text" name="chest_of_credits_amount" class="form-control" value="<?php echo $wo['config']['chest_of_credits_amount']?>">
+                                <small class="admin-info">Сколько баллов получит пользователь в этом пакете?</small>
+                            </div>
+                        </div>
+                        <div class="form-group form-float">
+                            <div class="form-line focused">
+                                <label class="form-label">Цена <?php echo $wo['config']['currency_symbol']?></label>
+                                <input type="text" name="chest_of_credits_price" class="form-control" value="<?php echo $wo['config']['chest_of_credits_price']?>">
+                                <small class="admin-info">Установите цену, по которой будет продаваться пакет.</small>
+                            </div>
+                        </div>
+                        <hr>
+                        <label for="user_registration" class="main-label">Другие наклейки Кредиты</label><div class="clearfix"></div><br>
+                        <div class="form-group form-float">
+                            <div class="form-line focused">
+                                <label class="form-label">Баллы</label>
+                                <input type="text" name="more_stickers_credits_price" class="form-control" value="<?php echo $wo['config']['more_stickers_credits_price']?>">
+                                <small class="admin-info">Сколько очков получит пользователь в этом пакете?</small>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+                        <input type="hidden" name="hash_id" value="<?php echo Wo_CreateSession();?>">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Premium Настройки пользователей</h6>
+                    <div class="site-settings-alert2"></div>
+                    <form class="site-settings2" method="POST">
+                        <div class="form-group form-float">
+                            <div class="form-line focused">
+                                <label class="form-label main-label">Цена еженедельного пакета «Премиум <?php echo $wo['config']['currency_symbol']?></label>
+                                <input type="text" name="weekly_pro_plan" class="form-control" value="<?php echo $wo['config']['weekly_pro_plan']?>">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+
+                        <div class="form-group form-float">
+                            <div class="form-line focused">
+                                <label class="form-label main-label">Ежемесячно Premium Цена пакета <?php echo $wo['config']['currency_symbol']?></label>
+                                <input type="text" name="monthly_pro_plan" class="form-control" value="<?php echo $wo['config']['monthly_pro_plan']?>">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+
+                        <div class="form-group form-float">
+                            <div class="form-line focused">
+                                <label class="form-label main-label" >Годовой премиум-пакет Цена  <?php echo $wo['config']['currency_symbol']?></label>
+                                <input type="text" name="yearly_pro_plan" class="form-control" value="<?php echo $wo['config']['yearly_pro_plan']?>">
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="form-group form-float">
+                            <div class="form-line focused">
+                                <label class="form-label main-label">Цена пожизненного премиум-пакета <?php echo $wo['config']['currency_symbol']?></label>
+                                <input type="text" name="lifetime_pro_plan" class="form-control" value="<?php echo $wo['config']['lifetime_pro_plan']?>">
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <label class="form-check-label" for="defualtLang">Фильтр по странам</label>
+                        <select class="form-control show-tick" id="filter_by_country" name="filter_by_country">
+                            <option value="ALL" <?php if($wo['config']['filter_by_country'] == 'ALL'){ ?>selected=""<?php }?>>All Users</option>
+                            <option value="PRO" <?php if($wo['config']['filter_by_country'] == 'PRO'){ ?>selected=""<?php }?>>Pro Пользователи</option>
+                        </select>
+                        <small class="admin-info">Кто может использовать фильтр по странам.</small>
+                        <div class="clearfix"></div>
+
+                        <input type="hidden" name="hash_id" value="<?php echo Wo_CreateSession();?>">
+                    </form>
+                </div>
+            </div>
+             <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">"Boost ME!" Системные настройки</h6>
+                    <div class="site-settings-alert4"></div>
+                    <form class="site-settings4" method="POST">
+                        <div class="form-group form-float">
+                            <div class="form-line focused">
+                                <label class="form-label main-label">"Boost Me!" Срок действияe</label>
+                                <input type="text" name="boost_expire_time" class="form-control" value="<?php echo $wo['config']['boost_expire_time']?>">
+                                <small class="admin-info">Через сколько минут истечет срок действия функции boost me?</small>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group form-float">
+                            <div class="form-line focused">
+                                <label class="form-label main-label">Кредиты Стоимость для Premium Пользователи</label>
+                                <input type="text" name="pro_boost_me_credits_price" class="form-control" value="<?php echo $wo['config']['pro_boost_me_credits_price']?>">
+                                <small class="admin-info">Сколько стоит функция boost me для премиум-пользователей?</small>
+                            </div>
+                        </div>
+                        <div class="form-group form-float">
+                            <div class="form-line focused">
+                                <label class="form-label main-label">Стоимость кредитов для бесплатных (всех) пользователей</label>
+                                <input type="text" name="normal_boost_me_credits_price" class="form-control" value="<?php echo $wo['config']['normal_boost_me_credits_price']?>">
+                                <small class="admin-info">Сколько стоит функция boost me для бесплатных пользователей?</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <input type="hidden" name="hash_id" value="<?php echo Wo_CreateSession();?>">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Настройки системы популярности</h6>
+                    <div class="site-settings-alert5"></div>
+                    <form class="site-settings5" method="POST">
+                        <label for="user_registration" class=" main-label">x10 Посещения</label><div class="clearfix"></div><br>
+                        <div class="form-group form-float">
+                            <div class="form-line focused">
+                                <label class="form-label">Баллы</label>
+                                <input type="text" name="cost_per_xvisits" class="form-control" value="<?php echo $wo['config']['cost_per_xvisits']?>">
+                                <small class="admin-info">Сколько баллов стоит этот пакет?</small>
+                            </div>
+                        </div>
+                        <div class="form-group form-float">
+                            <div class="form-line focused">
+                                <label class="form-label">Минуты</label>
+                                <input type="text" name="xvisits_expire_time" class="form-control" value="<?php echo $wo['config']['xvisits_expire_time']?>">
+                                <small class="admin-info">За сколько минут пользователь получит x10 посещений?</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+                        <label for="user_registration" class=" main-label">x4 Лайков</label><div class="clearfix"></div><br>
+                        <div class="form-group form-float">
+                            <div class="form-line focused">
+                                <label class="form-label">Баллы</label>
+                                <input type="text" name="cost_per_xlike" class="form-control" value="<?php echo $wo['config']['cost_per_xlike']?>">
+                                <small class="admin-info">Сколько баллов стоит этот пакет?</small>
+                            </div>
+                        </div>
+                        <div class="form-group form-float">
+                            <div class="form-line focused">
+                                <label class="form-label">Минут</label>
+                                <input type="text" name="xlike_expire_time" class="form-control" value="<?php echo $wo['config']['xlike_expire_time']?>">
+                                <small class="admin-info">За сколько минут пользователь получит x4 лайка?</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <input type="hidden" name="hash_id" value="<?php echo Wo_CreateSession();?>">
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Системные настройки GIFT</h6>
+                    <div class="site-settings-alert3"></div>
+                    <form class="site-settings3" method="POST">
+                        <div class="form-group form-float">
+                            <div class="form-line focused">
+                                <label class="form-label main-label">Цена подарочных кредитов</label>
+                                <input type="text" name="cost_per_gift" class="form-control" value="<?php echo $wo['config']['cost_per_gift']?>">
+                                <small class="admin-info">Сколько будет стоить пользователю отправить подарок, в кредитах?</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <input type="hidden" name="hash_id" value="<?php echo Wo_CreateSession();?>">
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Системные настройки AdMob</h6>
+                    <div class="site-settings-alert3"></div>
+                    <form class="site-settings3" method="POST">
+                        <div class="form-group form-float">
+                            <div class="form-line focused">
+                                <label class="form-label main-label">Цена AdMob</label>
+                                <input type="text" name="cost_admob" class="form-control" value="<?php echo $wo['config']['cost_admob']?>">
+                                <small class="admin-info">Сколько будет стоить AdMob в кредитах?</small>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+
+                        <input type="hidden" name="hash_id" value="<?php echo Wo_CreateSession();?>">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- #END# Vertical Layout -->
+<script>
+    $(function() {
+    $('.switcher input[type=checkbox]').click(function () {
+        var configName = $(this).attr('name');
+        var hash_id = $('input[name=hash_id]').val();
+        var objData = {};
+        if ($(this).is(":checked") === true) {
+            objData[configName] = $(this).val();
+        }
+        else{
+            if ($('input[name='+configName+']')[0]) {
+                objData[configName] = $($('input[name='+configName+']')[0]).val();
+            }
+        }
+        objData['hash_id'] = hash_id;
+        $.post(Wo_Ajax_Requests_File() + '?f=admin_setting&s=update_general_setting', objData);
+    });
+
+    var setTimeOutColor = setTimeout(function (){});
+    $('select').on('change', function() {
+         clearTimeout(setTimeOutColor);
+        var thisElement = $(this);
+        var configName = thisElement.attr('name');
+        var hash_id = $('input[name=hash_id]').val();
+        var objData = {};
+        objData[configName] = this.value;
+        objData['hash_id'] = hash_id;
+        thisElement.addClass('warning');
+        $.post(Wo_Ajax_Requests_File() + '?f=admin_setting&s=update_general_setting', objData, function (data) {
+            if (data.status == 200) {
+                thisElement.removeClass('warning');
+                thisElement.addClass('success');
+            } else {
+                thisElement.addClass('error');
+            }
+            var setTimeOutColor = setTimeout(function () {
+                thisElement.removeClass('success');
+                thisElement.removeClass('warning');
+                thisElement.removeClass('error');
+            }, 2000);
+        });
+    });
+    $('input[type=text], input[type=number], textarea').on('input', delay(function() {
+            clearTimeout(setTimeOutColor);
+            var thisElement = $(this);
+            var configName = thisElement.attr('name');
+            var hash_id = $('input[name=hash_id]').val();
+            var objData = {};
+            objData[configName] = this.value;
+            objData['hash_id'] = hash_id;
+            thisElement.addClass('warning');
+            $.post(Wo_Ajax_Requests_File() + '?f=admin_setting&s=update_general_setting', objData, function (data) {
+                if (data.status == 200) {
+                    thisElement.removeClass('warning');
+                    thisElement.addClass('success');
+                } else {
+                    thisElement.addClass('error');
+                }
+                var setTimeOutColor = setTimeout(function () {
+                    thisElement.removeClass('success');
+                    thisElement.removeClass('warning');
+                    thisElement.removeClass('error');
+                }, 2000);
+                //thisElement.focus();
+            });
+    }, 500));
+});
+</script>

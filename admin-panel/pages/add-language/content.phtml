@@ -1,0 +1,110 @@
+<div class="container-fluid">
+    <div>
+        <h3>Добавить новый язык и ключ</h3>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">Главная</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="#">Языки</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Добавить новый язык и ключ</li>
+            </ol>
+        </nav>
+    </div>
+    <!-- Вертикальная компоновка -->
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Добавить новый язык</h6>
+					<div class="alert alert-info">Примечание: Это может занять до 5 минут.</div>
+                    <div class="email-settings-alert"></div>
+                    <form class="email-settings" method="POST">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Название языка </label>
+                                <input type="text" id="lang" name="lang" class="form-control">
+                                <small class="admin-info">Используйте только английские буквы, пробелы запрещены. Например: russian</small>
+                            </div>
+                        </div>
+                        <input type="hidden" name="hash_id" value="<?php echo Wo_CreateSession();?>">
+                        <button type="submit" class="btn btn-primary m-t-15 waves-effect">Добавить язык</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-title">Добавить новый ключ</h6>
+                    <div class="key-settings-alert"></div>
+                    <form class="key-settings" method="POST">
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Название ключа </label>
+                                <input type="text" id="lang_key" name="lang_key" class="form-control">
+                                <small class="admin-info">Используйте только английские буквы, пробелы запрещены, например: this_is_a_key</small>
+                            </div>
+                        </div>
+                        <input type="hidden" name="hash_id" value="<?php echo Wo_CreateSession();?>">
+                        <button type="submit" class="btn btn-primary m-t-15 waves-effect">Добавить ключ</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <!-- #Конец# Вертикальная компоновка -->
+<script>
+
+$(function() {
+    var form_email_settings = $('form.email-settings');
+    form_email_settings.ajaxForm({
+        url: Wo_Ajax_Requests_File() + '?f=admin_setting&s=add_new_lang&p=manage-languages',
+        beforeSend: function() {
+            form_email_settings.find('button').text('Пожалуйста, подождите..');
+        },
+        success: function(data) {
+            if (data.status == 200) {
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+                $('.email-settings-alert').html('<div class="alert alert-success"><i class="fa fa-check"></i> Язык успешно добавлен</div>');
+                setTimeout(function () {
+		            window.location.href = '<?php echo Wo_LoadAdminLinkSettings('manage-languages'); ?>';
+		        }, 1000);
+            } else {
+                $('#lang').val('');
+                $('.email-settings-alert').html('<div class="alert alert-danger">'+data.message+'</div>');
+                setTimeout(function () {
+                    $('.email-settings-alert').empty();
+                }, 2000);
+            }
+            form_email_settings.find('button').text('Добавить язык');
+        }
+    });
+
+    var form_key_settings = $('form.key-settings');
+    form_key_settings.ajaxForm({
+        url: Wo_Ajax_Requests_File() + '?f=admin_setting&s=add_new_lang_key&p=manage-languages',
+        beforeSend: function() {
+            form_key_settings.find('button').text('Пожалуйста, подождите..');
+        },
+        success: function(data) {
+            if (data.status == 200) {
+                $("html, body").animate({ scrollTop: 0 }, "slow");
+                $('.key-settings-alert').html('<div class="alert alert-success"><i class="fa fa-check"></i> Ключ успешно добавлен</div>');
+                 setTimeout(function () {
+                    window.location.href = data.url;
+                  }, 1000);
+            } else {
+                $('.key-settings-alert').html('<div class="alert alert-danger">'+data.message+'</div>');
+                setTimeout(function () {
+                    $('.key-settings-alert').empty();
+                }, 2000);
+            }
+            form_key_settings.find('button').text('Добавить ключ');
+        }
+    });
+});
+</script>

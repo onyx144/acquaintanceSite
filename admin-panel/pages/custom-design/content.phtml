@@ -1,0 +1,103 @@
+<?php
+$code = custom_design("get");
+?>
+<div class="container-fluid">
+    <div class="block-header">
+        <h2>Дизайн > Пользовательский дизайн</h2>
+    </div>
+    <!-- Вертикальный макет -->
+    <div class="row">
+        <div class="col-lg-12 col-md-12">
+            <div class="card">
+                <div class="header">
+                    <h2>Пользовательский JS / CSS</h2>
+                </div>
+                <div class="body">
+                    <div class="alert alert-success ads-settings-alert"></div>
+                    <form class="custom-design-settings" method="POST">
+                        <div class="form-group">
+                        	<label class="form-label">Пользовательский JavaScript для Header</label>
+                            <textarea name="header_js" id="custom-header-js" class="form-control"><?php echo $code[0];?></textarea>
+                        </div>
+                       <div class="form-group">
+                        	<label class="form-label">Пользовательский JavaScript для Footer</label>
+                            <textarea name="footer_js" id="custom-footer-js" class="form-control"><?php echo $code[1];?></textarea>
+                        </div>
+                        <div class="form-group">
+                        	<label class="form-label">Пользовательский CSS стиль для Header</label>
+                            <textarea name="css_styles" id="custom-css-code" class="form-control"><?php echo $code[2]; ?></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary m-t-15 waves-effect">Сохранить</button>
+                        <input type="hidden" name="hash_id" value="<?php echo Wo_CreateSession();?>">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <!-- Конец вертикального макета -->
+<script>
+$(function() {
+    	var form_ads_settings = $('form.custom-design-settings');
+        var readOnlyCodeMirror = CodeMirror.fromTextArea(document.getElementById('custom-header-js'), {
+	        mode: "javascript",
+	        theme: "default",
+	        lineNumbers: true,
+	        readOnly: false
+        });
+
+        var readOnlyCodeMirror = CodeMirror.fromTextArea(document.getElementById('custom-footer-js'), {
+        	mode: "javascript",
+        	theme: "default",
+        	lineNumbers: true,
+        	readOnly: false
+        });
+
+        var readOnlyCodeMirror = CodeMirror.fromTextArea(document.getElementById('custom-css-code'), {
+        	mode: "css",
+        	theme: "default",
+        	lineNumbers: true,
+        	readOnly: false
+        });   
+
+	    form_ads_settings.ajaxForm({
+	        url: '{{LINK aj/ap/save-custom-design-settings}}',
+	        dataType:'json',
+	        beforeSend: function() {
+	            form_ads_settings.find('.waves-effect').text('Пожалуйста, подождите...');
+	        },
+	        success: function(data) {
+	        	if (data.status == 200) {
+	                swal({
+	                  title: "Изменения сохранены!",
+	                  text: "Ваши изменения успешно сохранены",
+	                  type: "success"
+	                });
+		        }
+
+	            else if (data.status == 500) {
+	            	var error  = "";
+	            	
+	            	for (key in data.errors) {
+	            		error  = data.errors[key];
+	            		break;
+	            	}
+
+	                swal({
+	                	title: "Ошибка прав доступа к файлам!",
+	                	text: error,
+	                	type: "error"
+	                });
+	            }
+
+	            setTimeout(function(){
+	               swal.close();
+	            }, 5000);
+
+		        form_ads_settings.find('.waves-effect').text('Сохранить');
+	            $("html, body").animate({ scrollTop: 0 }, "slow");
+	        }
+	    });
+});
+
+</script>

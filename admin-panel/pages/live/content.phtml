@@ -1,0 +1,233 @@
+<div class="container-fluid">
+    <div>
+        <!-- Заголовок страницы -->
+        <h3>Настройка прямых трансляций</h3>
+        <!-- Навигация по хлебным крошкам -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="#">Главная</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="#">Настройки</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">Настройка прямых трансляций</li>
+            </ol>
+        </nav>
+    </div>
+    <!-- Основной блок настроек -->
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <!-- Заголовок секции настроек прямых трансляций -->
+                    <h6 class="card-title">Настройки прямых трансляций</h6>
+                    <!-- Место для отображения уведомлений -->
+                    <div class="email-settings-alert"></div>
+                    <form class="email-settings" method="POST">
+                        <div>
+                            <div class="float-left">
+                                <!-- Переключатель для включения/выключения прямых трансляций -->
+                                <label for="live_video" class="main-label">Прямые трансляции</label>
+                                <br>
+                                <small class="admin-info">
+                                    Включите эту функцию, чтобы пользователи могли запускать прямые трансляции.
+                                </small>
+                            </div>
+                            <div class="form-group float-right switcher">
+                                <!-- Поле скрытого значения для выключения -->
+                                <input type="hidden" name="live_video" value="0">
+                                <!-- Чекбокс для включения -->
+                                <input type="checkbox" name="live_video" id="live_video-enabled" value="1" 
+                                <?php echo ($wo['config']['live_video'] == '1') ? 'checked' : ''; ?>>
+                                <label for="live_video-enabled" class="check-trail">
+                                    <span class="check-handler"></span>
+                                </label>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <!-- Скрытое поле для идентификатора сессии -->
+                        <input type="hidden" name="hash_id" value="<?php echo Wo_CreateSession(); ?>">
+                    </form>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <!-- Заголовок секции конфигурации API Agora -->
+                    <h6 class="card-title">Конфигурация API Agora</h6>
+                    <!-- Место для отображения уведомлений -->
+                    <div class="agora-settings-alert"></div>
+                    <form class="agora-settings" method="POST">
+                        <!-- Информационное сообщение о необходимости регистрации в Agora -->
+                        <div class="alert-info alert">
+                            Для использования этой функции вам необходимо создать учетную запись в 
+                            <a href="https://www.agora.io/en/">Agora</a>.
+                        </div>
+                        
+                        <div>
+                            <div class="float-left">
+                                <!-- Переключатель для включения/выключения прямых трансляций через Agora -->
+                                <label for="agora_live_video" class="main-label">Agora прямые трансляции</label>
+                                <br>
+                                <small class="admin-info">
+                                    Пользователи могут запускать трансляции через Agora. <br>
+                                    Учтите, что одновременно можно использовать только одного провайдера.
+                                </small>
+                            </div>
+                            <div class="form-group float-right switcher">
+                                <!-- Поле скрытого значения для выключения -->
+                                <input type="hidden" name="agora_live_video" value="0">
+                                <!-- Чекбокс для включения -->
+                                <input type="checkbox" name="agora_live_video" id="agora_live_video-enabled" value="1" 
+                                <?php echo ($wo['config']['agora_live_video'] == '1') ? 'checked' : ''; ?>>
+                                <label for="agora_live_video-enabled" class="check-trail">
+                                    <span class="check-handler"></span>
+                                </label>
+                            </div>
+                            <div class="clearfix"></div>
+                            <hr>
+                        </div>
+
+                        <!-- Поле для ввода ID приложения -->
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">ID приложения</label>
+                                <input type="text" id="agora_app_id" name="agora_app_id" class="form-control" 
+                                value="<?php echo $wo['config']['agora_app_id']; ?>">
+                            </div>
+                        </div>
+                        <!-- Поле для ввода сертификата приложения -->
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Сертификат приложения</label>
+                                <input type="text" id="agora_app_certificate" name="agora_app_certificate" 
+                                class="form-control" value="<?php echo $wo['config']['agora_app_certificate']; ?>">
+                            </div>
+                        </div>
+                        <!-- Поле для ввода ID клиента -->
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">ID клиента</label>
+                                <input type="text" id="agora_customer_id" name="agora_customer_id" class="form-control" 
+                                value="<?php echo $wo['config']['agora_customer_id']; ?>">
+                            </div>
+                        </div>
+                        <!-- Поле для ввода сертификата клиента -->
+                        <div class="form-group form-float">
+                            <div class="form-line">
+                                <label class="form-label">Сертификат клиента</label>
+                                <input type="text" id="agora_customer_certificate" name="agora_customer_certificate" 
+                                class="form-control" value="<?php echo $wo['config']['agora_customer_certificate']; ?>">
+                            </div>
+                        </div>
+                        <!-- Скрытое поле для идентификатора сессии -->
+                        <input type="hidden" name="hash_id" value="<?php echo Wo_CreateSession(); ?>">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <!-- #END# Основной блок настроек -->
+<script>
+
+function Wo_TestS3() {
+    $('form.agora-settings').find('.btn-warning').text('Please wait..');
+    $.get(Wo_Ajax_Requests_File(), {f:'admin_setting', s: 'test_s3_2'}, function (data) {
+        if (data.status == 200) {
+            $('.agora-settings-alert').html('<div class="alert alert-success"><i class="fa fa-check"></i> Connection established!</div>');
+            setTimeout(function () {
+                $('.agora-settings-alert').empty();
+            }, 2000);
+        } else if (data.status == 300) {
+            $('.agora-settings-alert').html('<div class="alert alert-danger">Bucket doesn\'t exists</div>');
+            setTimeout(function () {
+                $('.agora-settings-alert').empty();
+            }, 2000);
+        } else if (data.status == 500) {
+            $('.agora-settings-alert').html('<div class="alert alert-danger">Your s3 account doesn\'t have any buckets, please create one.</div>');
+            setTimeout(function () {
+                $('.agora-settings-alert').empty();
+            }, 2000);
+        } else if (data.status == 400) {
+            $('.agora-settings-alert').html('<div class="alert alert-danger">'+data.message+'</div>');
+            setTimeout(function () {
+                $('.agora-settings-alert').empty();
+            }, 2000);
+        } else  {
+            $('.agora-settings-alert').html('<div class="alert alert-danger">Error while connecting to amazone, please check your details</div>');
+            setTimeout(function () {
+                $('.agora-settings-alert').empty();
+            }, 2000);
+        }
+        $('form.agora-settings').find('.btn-warning').text('Test Connection');
+    });
+}
+
+$(function() {
+    $('.switcher input[type=checkbox]').click(function () {
+        var configName = $(this).attr('name');
+        var hash_id = $('input[name=hash_id]').val();
+        var objData = {};
+        if ($(this).is(":checked") === true) {
+            objData[configName] = $(this).val();
+        }
+        else{
+            if ($('input[name='+configName+']')[0]) {
+                objData[configName] = $($('input[name='+configName+']')[0]).val();
+            }
+        }
+        objData['hash_id'] = hash_id;
+        $.post(Wo_Ajax_Requests_File() + '?f=admin_setting&s=update_general_setting', objData);
+    });
+
+    var setTimeOutColor = setTimeout(function (){});
+    $('select').on('change', function() {
+         clearTimeout(setTimeOutColor);
+        var thisElement = $(this);
+        var configName = thisElement.attr('name');
+        var hash_id = $('input[name=hash_id]').val();
+        var objData = {};
+        objData[configName] = this.value;
+        objData['hash_id'] = hash_id;
+        thisElement.addClass('warning');
+        $.post(Wo_Ajax_Requests_File() + '?f=admin_setting&s=update_general_setting', objData, function (data) {
+            if (data.status == 200) {
+                thisElement.removeClass('warning');
+                thisElement.addClass('success');
+            } else {
+                thisElement.addClass('error');
+            }
+            var setTimeOutColor = setTimeout(function () {
+                thisElement.removeClass('success');
+                thisElement.removeClass('warning');
+                thisElement.removeClass('error');
+            }, 2000);
+        });
+    });
+    $('input[type=text], input[type=number], input[type=password], textarea').on('input', delay(function() {
+            clearTimeout(setTimeOutColor);
+            var thisElement = $(this);
+            var configName = thisElement.attr('name');
+            var hash_id = $('input[name=hash_id]').val();
+            var objData = {};
+            objData[configName] = this.value;
+            objData['hash_id'] = hash_id;
+            thisElement.addClass('warning');
+            $.post(Wo_Ajax_Requests_File() + '?f=admin_setting&s=update_general_setting', objData, function (data) {
+                if (data.status == 200) {
+                    thisElement.removeClass('warning');
+                    thisElement.addClass('success');
+                } else {
+                    thisElement.addClass('error');
+                }
+                var setTimeOutColor = setTimeout(function () {
+                    thisElement.removeClass('success');
+                    thisElement.removeClass('warning');
+                    thisElement.removeClass('error');
+                }, 2000);
+                //thisElement.focus();
+            });
+    }, 500));
+});
+</script>
