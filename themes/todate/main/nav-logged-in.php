@@ -58,9 +58,26 @@
 						<?php } ?>
 					<?php } //фильтр хедер
 					?>
-					<li>
-		<a href="#filtr_slide_out" class="btn btn_primary modal-trigger" title="<?php echo $_gender_text;?> <?php echo __('who ages');?> <?php echo $_age_from;?> <?php echo $_age_to;?> <?php if (!empty($data['find_match_data']) && !empty($data['find_match_data']['located'])) { ?><?php echo __('located within');?> <?php echo $_located;?> <?php echo $config->default_unit;?><?php }elseif (!empty($data['find_match_data']) && !empty($data['find_match_data']['country']) && !empty(Dataset::load('countries'))) { if ($data['find_match_data']['country'] == 'all') { ?><?php echo __('located_at');?> <?php echo __('all_countries');?><?php 	}elseif (in_array($data['find_match_data']['country'], array_keys(Dataset::load('countries')))) { ?><?php echo __('located_at');?> <?php echo Dataset::load('countries')[$data['find_match_data']['country']]['name'];?><?php } } ?>"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" fill="currentColor"/></svg></a>
-					<li>
+					<?php
+if (basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)) === 'find-matches') { ?>
+    <li>
+        <a href="#filtr_slide_out" class="btn btn_primary modal-trigger" title="<?php echo $_gender_text; ?> <?php echo __('who ages'); ?> <?php echo $_age_from; ?> <?php echo $_age_to; ?> 
+        <?php if (!empty($data['find_match_data']) && !empty($data['find_match_data']['located'])) { ?>
+            <?php echo __('located within'); ?> <?php echo $_located; ?> <?php echo $config->default_unit; ?>
+        <?php } elseif (!empty($data['find_match_data']) && !empty($data['find_match_data']['country']) && !empty(Dataset::load('countries'))) { 
+            if ($data['find_match_data']['country'] == 'all') { ?>
+                <?php echo __('located_at'); ?> <?php echo __('all_countries'); ?>
+            <?php } elseif (in_array($data['find_match_data']['country'], array_keys(Dataset::load('countries')))) { ?>
+                <?php echo __('located_at'); ?> <?php echo Dataset::load('countries')[$data['find_match_data']['country']]['name']; ?>
+            <?php } 
+        } ?>">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" fill="currentColor"/>
+            </svg>
+        </a>
+    </li>
+<?php } ?>
+<li>
 						<div class="boost-div">
 							<?php
 								$boost_duration = 0;

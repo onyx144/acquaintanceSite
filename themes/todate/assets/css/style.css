@@ -9351,6 +9351,38 @@ code pre {
         display: flex;
         align-items: center;
     }
+    p.text_card {
+        color: #fff;
+    }
+    
+    p.text_card a {
+        color: #fff;
+        padding: 0;
+        margin: 0;
+        padding: 5px;
+        padding-left: 0;
+    }
+    nav#nav-logged-in {
+        position: fixed;
+        margin-top: 0px;
+    }
+    .to_small_usr .card-image img {
+        border-radius: 8px;
+    }
+    
+    .container.page-margin {
+        margin-top: 65px;
+    }
+    .to_small_usr {
+        background-color: transparent;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        overflow: hidden;
+        padding: 0;
+        border: 0;
+        font-family: 'Libre Franklin', sans-serif;
+        margin-bottom: 20px;
+    }
     
     nav ul li button#boost_btn {
         display: flex;

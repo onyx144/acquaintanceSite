@@ -56,7 +56,7 @@
 	
 	<div class="valign-wrapper to_page_title">
 		<h3 class="valign-wrapper"><span><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24"><path fill="currentColor" d="M21.47,4.35L20.13,3.79V12.82L22.56,6.96C22.97,5.94 22.5,4.77 21.47,4.35M1.97,8.05L6.93,20C7.24,20.77 7.97,21.24 8.74,21.26C9,21.26 9.27,21.21 9.53,21.1L16.9,18.05C17.65,17.74 18.11,17 18.13,16.26C18.14,16 18.09,15.71 18,15.45L13,3.5C12.71,2.73 11.97,2.26 11.19,2.25C10.93,2.25 10.67,2.31 10.42,2.4L3.06,5.45C2.04,5.87 1.55,7.04 1.97,8.05M18.12,4.25A2,2 0 0,0 16.12,2.25H14.67L18.12,10.59"></path></svg></span> <?php echo __( 'Find Matches' );?></h3>
-		<a href="#filtr_slide_out" class="btn btn_primary modal-trigger" title="<?php echo $_gender_text;?> <?php echo __('who ages');?> <?php echo $_age_from;?> <?php echo $_age_to;?> <?php if (!empty($data['find_match_data']) && !empty($data['find_match_data']['located'])) { ?><?php echo __('located within');?> <?php echo $_located;?> <?php echo $config->default_unit;?><?php }elseif (!empty($data['find_match_data']) && !empty($data['find_match_data']['country']) && !empty(Dataset::load('countries'))) { if ($data['find_match_data']['country'] == 'all') { ?><?php echo __('located_at');?> <?php echo __('all_countries');?><?php 	}elseif (in_array($data['find_match_data']['country'], array_keys(Dataset::load('countries')))) { ?><?php echo __('located_at');?> <?php echo Dataset::load('countries')[$data['find_match_data']['country']]['name'];?><?php } } ?>"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" fill="currentColor"/></svg> <?php echo __('Apply Filters');?></a>
+
 	</div>
 		
 	<!-- Match Users  -->

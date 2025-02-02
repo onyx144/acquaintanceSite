@@ -3901,6 +3901,11 @@ function getAge($date) {
     if(empty($date) || $date === '0000-00-00') return 0;
     return intval(date('Y', time() - strtotime($date))) - 1970;
 }
+function udetails_age($user) {
+    $age = getAge($user->birthday);
+    return ($age > 0) ? $age : '&nbsp;';
+}
+
 function udetails($user){
     global $config,$db;
     $return = '';
