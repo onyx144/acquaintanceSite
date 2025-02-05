@@ -684,6 +684,50 @@ console.log(result.class);
                 } else {}
             }
         });
+        //Slider Cart
+        document.addEventListener('DOMContentLoaded', function () {
+            let slider = document.getElementById('slider1');
+            if (slider) {
+                let track = document.getElementById('sliderTrack1');
+                let startX = 0;
+                let currentTranslate = 0;
+                let prevTranslate = 0;
+                let index = 0;
+                let slides = document.querySelectorAll('.slide1');
+                let totalSlides = slides.length;
+        
+                function setPosition() {
+                    track.style.transform = `translateX(${currentTranslate}px)`;
+                }
+        
+                function touchStart(event) {
+                    startX = event.touches[0].clientX;
+                    prevTranslate = currentTranslate;
+                }
+        
+                function touchMove(event) {
+                    let moveX = event.touches[0].clientX - startX;
+                    currentTranslate = prevTranslate + moveX;
+                    setPosition();
+                }
+        
+                function touchEnd() {
+                    let moveX = currentTranslate - prevTranslate;
+                    if (moveX < -50 && index < totalSlides - 1) {
+                        index++;
+                    } else if (moveX > 50 && index > 0) {
+                        index--;
+                    }
+                    currentTranslate = -index * slider.clientWidth;
+                    setPosition();
+                }
+        
+                slider.addEventListener('touchstart', touchStart);
+                slider.addEventListener('touchmove', touchMove);
+                slider.addEventListener('touchend', touchEnd);
+            }
+        });
+
         // Home Filters
         $(document).on('click', '#home_filters_toggle', function(e) {
             console.log('test');

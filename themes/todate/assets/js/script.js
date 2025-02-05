@@ -1601,3 +1601,82 @@ $(document).ready(function(){
 		}
 	});
 })
+
+$(document).ajaxSend(function(event, jqxhr, settings) {
+    console.log("AJAX-запрос:", settings.url);
+});
+
+function initSlider() {
+    let slider = document.getElementById('slider1');
+    if (!slider) return; // Если слайдера нет, выходим
+
+    let track = document.getElementById('sliderTrack1');
+    let startX = 0;
+    let currentTranslate = 0;
+    let prevTranslate = 0;
+    let index = 0;
+    let slides = document.querySelectorAll('.slide1');
+    let totalSlides = slides.length;
+
+    // Очищаем старые индикаторы
+    const indicatorContainer = document.querySelector('.slider-indicator');
+    indicatorContainer.innerHTML = '';
+
+    // Создаём индикаторы для слайдов
+    for (let i = 0; i < totalSlides; i++) {
+        const indicator = document.createElement('div');
+        indicatorContainer.appendChild(indicator);
+    }
+    let indicators = indicatorContainer.querySelectorAll('div');
+
+    function setPosition() {
+        track.style.transform = `translateX(${currentTranslate}px)`;
+    }
+
+    function updateIndicators() {
+        indicators.forEach((indicator, i) => {
+            indicator.classList.toggle('active', i === index);
+        });
+    }
+
+    function touchStart(event) {
+        startX = event.touches[0].clientX;
+        prevTranslate = currentTranslate;
+    }
+
+    function touchMove(event) {
+        let moveX = event.touches[0].clientX - startX;
+        currentTranslate = prevTranslate + moveX;
+        setPosition();
+    }
+
+    function touchEnd() {
+        let moveX = currentTranslate - prevTranslate;
+        if (moveX < -50 && index < totalSlides - 1) index++;
+        else if (moveX > 50 && index > 0) index--;
+
+        currentTranslate = -index * slider.clientWidth;
+        setPosition();
+        updateIndicators();
+    }
+
+    // Удаляем старые события (чтобы не дублировались)
+    slider.removeEventListener('touchstart', touchStart);
+    slider.removeEventListener('touchmove', touchMove);
+    slider.removeEventListener('touchend', touchEnd);
+
+    // Назначаем новые обработчики
+    slider.addEventListener('touchstart', touchStart);
+    slider.addEventListener('touchmove', touchMove);
+    slider.addEventListener('touchend', touchEnd);
+
+    // Изначально обновляем индикаторы
+    updateIndicators();
+}
+
+$(document).ready(initSlider);
+
+// Запуск после AJAX-загрузки
+$(document).ajaxComplete(function() {
+    initSlider();
+});

@@ -38,36 +38,96 @@ if($matched_count[0]['cnt'] == 2){
     <div class="row r_margin">
         <div class="col s12 l5">
 			<div class="to_user_media">
-				<div class="avatar">
-					<a class="inline" href="<?php echo $profile->avater->full;?>" id="avater_profile_img">
-						<img src="<?php echo $profile->avater->full;?>" alt="<?php echo $profile->full_name;?>" class="responsive-img" />
-					</a>
-					<?php if( $user !== null ){ ?>
-						<?php if( $user->admin == 1 ){ ?>
-							<div class="dt_chng_avtr">
-								<span class="btn-upload-image" onclick="document.getElementById('admin_profileavatar_img').click(); return false">
-									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M9 3h6l2 2h4a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h4l2-2zm3 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12zm0-2a4 4 0 1 1 0-8 4 4 0 0 1 0 8z" fill="currentColor"/></svg> <p><?php echo __( 'Change Photo' );?></p>
+			<div class="slider1" id="slider1">
+			<div class="slider-indicator">
+        <!-- Индикаторы линий будут добавлены через JS -->
+    </div>
+	<p class="slider-name">
+	<?php if( verifiedUser($profile) ){ ?>
+								<span title="<?php echo __( 'This profile is Verified' );?>">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#2196F3" d="M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1Z" /></svg>
 								</span>
-								<input type="file" id="admin_profileavatar_img" data-username="<?php echo $profile->username;?>" data-userid="<?php echo $profile->id;?>" class="hide" accept="image/x-png, image/gif, image/jpeg" name="avatar">
-							</div>
-							<div class="dt_avatar_progress hide">
-								<div class="admin_avatar_imgprogress progress">
-									<div class="admin_avatar_imgdeterminate determinate" style="width: 0%"></div >
-								</div>
-							</div>
-							<div class="admin_avatar_imgprogress progress hide">
-								<div class="admin_avatar_imgdeterminate determinate" style="width: 0%"></div >
-							</div>
-						<?php } ?>
+							<?php }else{ ?>
+                                <?php if($config->emailValidation == "0"){?>
+                                    <span title="<?php echo __( 'This profile is Verified' );?>">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#2196F3" d="M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1Z" /></svg>
+                                    </span>
+                                <?php }else{ ?>
+                                    <span title="<?php echo __( 'This profile is Not verified' );?>">
+									    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#e18805" d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M17,15.59L15.59,17L12,13.41L8.41,17L7,15.59L10.59,12L7,8.41L8.41,7L12,10.59L15.59,7L17,8.41L13.41,12L17,15.59Z" /></svg>
+								    </span>
+                                <?php } ?>
+							<?php } ?>
+							<?php echo $profile->first_name.$profile->pro_icon;?><?php echo ( $profile->age  > 0 ) ? ", ". $profile->age : "";?></p>
+	<?php if( $profile->country !== '' ){?>
+					<div class="counry_profile">
+						<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M12 20.9l4.95-4.95a7 7 0 1 0-9.9 0L12 20.9zm0 2.828l-6.364-6.364a9 9 0 1 1 12.728 0L12 23.728zM12 13a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm0 2a4 4 0 1 1 0-8 4 4 0 0 1 0 8z" fill="currentColor"></path></svg> <?php echo $profile->country_txt;?></span>
+					</div>
 					<?php } ?>
-				</div>
+    <div class="slider-track1" id="sliderTrack1">
+
+        <?php
+            $i = 0;
+            $media_count = count((array)$profile->mediafiles);
+            $gallery = array();
+            $gallery['visable'][0] = null;
+            $gallery['visable'][1] = null;
+            $gallery['visable'][2] = null;
+            $gallery['visable'][3] = null;
+            $gallery['visable'][4] = null;
+            $gallery['visable'][5] = null;
+
+            for ($i == 0; $i < $media_count; $i++) {
+                $gallery['visable'][$i] = $profile->mediafiles[$i];
+            }
+
+            $matched = false;
+            global $db;
+
+            $matched_count = array('cnt' => 0);
+            if (!empty($user)) {
+                $matched_count = $db->rawQuery('SELECT count(id) as cnt FROM notifications WHERE type = "got_new_match" AND ( (notifier_id = ' . auth()->id . ' AND recipient_id = ' . $profile->id . ') OR (notifier_id = ' . $profile->id . ' AND recipient_id = ' . auth()->id . ') )');
+            }
+            if (!empty($matched_count) && !empty($matched_count[0]) && !empty($matched_count[0]['cnt']) && $matched_count[0]['cnt'] == 2) {
+                $matched = true;
+            }
+
+            foreach ($gallery['visable'] as $key => $value) {
+                if (!empty($value)) {
+                    $private = 'false';
+                    if ($value['is_private'] == 1) {
+                        $private = 'true';
+                    }
+                    $is_avater = 'false';
+                    if ($value['avater'] == $profile->avater->avater) {
+                        $is_avater = 'true';
+                    }
+                    $full = $value['full'];
+                    $avater = $value['avater'];
+
+                    if ($value['is_private'] == 1 && $matched === false) {
+                        $full = $value['private_file_full'];
+                        $avater = $value['private_file_avater'];
+                    }
+
+                    if ($config->review_media_files == '1' && $value['is_approved'] == 1) {
+                        echo '<div class="slide1" style="background-image: url(' . $avater . ');"></div>';
+                    } else {
+                        if ($config->review_media_files == '0' && $value['is_approved'] == 1) {
+                            echo '<div class="slide1" style="background-image: url(' . $avater . ');"></div>';
+                        }
+                    }
+                }
+            }
+        ?>
+    </div>
+	
+</div>
 				<?php if(!empty($user) ) {?>
 				<div class="dt_user_pro_info">
-					<?php if( $config->connectivitySystem == "1" && !( Wo_IsFollowing($profile->id, $user->id) || Wo_IsFollowing($user->id, $profile->id) ) && !( Wo_IsFollowRequested($profile->id, (int) $user->id) || Wo_IsFollowRequested( (int) $user->id , $profile->id ) ) && (int)Wo_CountFollowing($user->id) < (int)$config->connectivitySystemLimit ){ ?>
-						<a class="btn btn-flat" href="javascript:void(0);" id="btn_add_friend" data-ajax-post="/profile/add_friend" data-ajax-params="to=<?php echo $profile->id;?>" data-ajax-callback="callback_add_friend" title="<?php echo __( 'Add Friend' );?>">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#009688" d="M14 14.252v2.09A6 6 0 0 0 6 22l-2-.001a8 8 0 0 1 10-7.748zM12 13c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6zm0-2c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm6 6v-3h2v3h3v2h-3v3h-2v-3h-3v-2h3z"></path></svg>
-						</a>
-					<?php } ?>
+				<a class="btn btn-flat min" href="javascript:void(0);" id="btn_delete_friend" data-ajax-post="/profile/add_friend" data-ajax-params="to=<?php echo $profile->id;?>" data-ajax-callback="callback_add_friend" title="<?php echo __( 'UnFriend' );?>">
+							<
+					</a>
 					<?php if( $config->connectivitySystem == "1" && ( Wo_IsFollowing($profile->id, $user->id) || Wo_IsFollowing($user->id, $profile->id) ) ){ ?>
 						<a class="btn btn-flat" href="javascript:void(0);" id="btn_delete_friend" data-ajax-post="/profile/add_friend" data-ajax-params="to=<?php echo $profile->id;?>" data-ajax-callback="callback_add_friend" title="<?php echo __( 'UnFriend' );?>">
 							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#607D8B" d="M14 14.252V22H4a8 8 0 0 1 10-7.748zM12 13c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6zm7 3.586l2.121-2.122 1.415 1.415L20.414 18l2.122 2.121-1.415 1.415L19 19.414l-2.121 2.122-1.415-1.415L17.586 18l-2.122-2.121 1.415-1.415L19 16.586z"></path></svg>
@@ -95,9 +155,7 @@ if($matched_count[0]['cnt'] == 2){
 						<a href="javascript:void(0);" id="like_btn" data-replace-text="<?php echo __('Liked');?>" data-replace-dom=".like_text" data-ajax-post="/useractions/<?php if( isUserLiked( $profile->id ) ) { echo 'remove_like'; } else { echo 'like'; }?>" data-ajax-params="email_on_profile_like=<?php echo $profile->email_on_profile_like;?>&username=<?php echo $profile->username;?>" data-ajax-callback="callback_<?php if( isUserLiked( $profile->id ) ) { echo 'remove_like" class="btn btn-flat lk_active'; } else { echo 'like" class="btn btn-flat'; }?>" title="<?php if( isUserLiked( $profile->id ) ) { echo __( 'Liked' ); } else { echo __( 'Like' ); }?>">
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M21.179 12.794l.013.014L12 22l-9.192-9.192.013-.014A6.5 6.5 0 0 1 12 3.64a6.5 6.5 0 0 1 9.179 9.154zM4.575 5.383a4.5 4.5 0 0 0 0 6.364L12 19.172l7.425-7.425a4.5 4.5 0 0 0-6.364-6.364L8.818 9.626 7.404 8.21l3.162-3.162a4.5 4.5 0 0 0-5.99.334z" fill="#ff5722"></path></svg>
 						</a>
-						<a href="javascript:void(0);" id="dislike_btn" data-replace-text="<?php echo __('Disliked');?>" data-replace-dom=".dislike_text" data-ajax-post="/useractions/<?php if( isUserDisliked( $profile->id ) ) { echo 'remove_dislike'; } else { echo 'dislike'; }?>" data-ajax-params="username=<?php echo $profile->username;?>" data-ajax-callback="callback_<?php if( isUserDisliked( $profile->id ) ) { echo 'remove_dislike" class="btn btn-flat dk_active'; } else { echo 'dislike" class="btn btn-flat'; }?>" title="<?php if( isUserDisliked( $profile->id ) ) { echo __( 'Disliked' ); } else { echo __( 'Dislike' ); }?>">
-							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path></svg>
-						</a>
+						
 					<?php } ?>
 					<?php if( $profile->src !== 'Fake' ){?>
 						<a class="btn btn-flat" href="javascript:void(0);" id="btn_open_private_conversation" data-ajax-post="/chat/open_private_conversation" data-ajax-params="from=<?php echo $profile->id;?>&web_device_id=<?php echo $profile->web_device_id;?>" data-ajax-callback="open_private_conversation" title="<?php echo __( 'Message' );?>">
@@ -118,7 +176,7 @@ if($matched_count[0]['cnt'] == 2){
 			<div class="dt_user_profile dt_user_info">
 				<div class="info">
 					<div class="combo dt_othr_ur_info">
-                        <h2><?php echo $profile->full_name.$profile->pro_icon;?><?php echo ( $profile->age  > 0 ) ? ", ". $profile->age : "";?>
+                        <h2><?php echo $profile->first_name.$profile->pro_icon;?><?php echo ( $profile->age  > 0 ) ? ", ". $profile->age : "";?>
 							<?php if( verifiedUser($profile) ){ ?>
 								<span title="<?php echo __( 'This profile is Verified' );?>">
 									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#2196F3" d="M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1Z" /></svg>
@@ -159,11 +217,7 @@ if($matched_count[0]['cnt'] == 2){
 						</div>
 						<?php } ?>
 					</div>
-					<?php if( $profile->country !== '' ){?>
-					<div class="to_user_stats">
-						<span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M12 20.9l4.95-4.95a7 7 0 1 0-9.9 0L12 20.9zm0 2.828l-6.364-6.364a9 9 0 1 1 12.728 0L12 23.728zM12 13a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm0 2a4 4 0 1 1 0-8 4 4 0 0 1 0 8z" fill="currentColor"></path></svg> <?php echo $profile->country_txt;?></span>
-					</div>
-					<?php } ?>
+					
 					<?php if( $config->social_media_links == 'on' ){?>
 						<?php if( !empty( $profile->facebook ) || !empty( $profile->twitter ) || !empty( $profile->google ) || !empty( $profile->instagram ) || !empty( $profile->linkedin ) || !empty( $profile->website ) ) {?>
 							<ul class="dt_user_social">
@@ -261,105 +315,7 @@ if($matched_count[0]['cnt'] == 2){
 						<p class="to_intrst_des"><?php echo nl2br($profile->about);?></p>
 					</div>
 				<?php } ?>
-				<div class="dt_cp_photos_list">
-					<?php
-						$i = 0;
-						$media_count = count( (array)$profile->mediafiles );
-						$gallery = array();
-						$gallery['visable'][0] = null;
-						$gallery['visable'][1] = null;
-						$gallery['visable'][2] = null;
-						$gallery['visable'][3] = null;
-						$gallery['visable'][4] = null;
-						$gallery['visable'][5] = null;
-
-						for( $i == 0 ; $i < $media_count ; $i++ ){
-							$gallery['visable'][$i] = $profile->mediafiles[$i];
-						}
-
-						$matched = false;
-						global $db;
-
-						$matched_count = array('cnt' => 0);
-						if(!empty($user) ) {
-							$matched_count = $db->rawQuery('SELECT count(id) as cnt FROM `notifications` WHERE `type` = "got_new_match" AND ( (`notifier_id` = ' . auth()->id . ' AND `recipient_id` = ' . $profile->id . ') OR (`notifier_id` = ' . $profile->id . ' AND `recipient_id` = ' . auth()->id . ') )');
-						}
-						if(!empty($matched_count) && !empty($matched_count[0]) && !empty($matched_count[0]['cnt']) && $matched_count[0]['cnt'] == 2){
-							$matched = true;
-						}
-
-						foreach ($gallery['visable'] as $key => $value) {
-							if(!empty($value) &&  $value['is_video'] == "1" && $value['is_confirmed'] == "0" ){
-
-							} else {
-								if (!empty($value)) {
-									$private = 'false';
-									if ($value['is_private'] == 1) {
-										$private = 'true';
-									}
-									$is_avater = 'false';
-									if ($value['avater'] == $profile->avater->avater) {
-										$is_avater = 'true';
-									}
-									$full = $value['full'];
-									$avater = $value['avater'];
-									$video_file = $value['video_file'];
-									if ($value['is_private'] == 1 && $matched === false) {
-										$full = $value['private_file_full'];
-										$avater = $value['private_file_avater'];
-									}
-									if($config->review_media_files == '1' && $value['is_approved'] == 1){
-										echo '<div class="dt_cp_l_photos">';
-										if( $value['is_video'] == "1" ){
-											if ($value['is_private'] == 1 && $matched === false) {
-												echo '<a class="inline" href="' . $value['full'] . '" data-fancybox="gallery" data-id="' . $value['id'] . '" data-private="' . $private . '" data-avater="' . $is_avater . '">';
-											}else{
-												echo '<a class="inline" href="#myVideo_'.$value['id'].'" data-fancybox="gallery" data-id="' . $value['id'] . '" data-video="' . $value['is_video'] . '" data-private="' . $private . '" data-avater="' . $is_avater . '">';
-												echo '<video width="800" height="550" controls id="myVideo_'.$value['id'].'" style="display:none;">';
-												echo '    <source src="'.$video_file.'" type="video/mp4">';
-												echo '    Your browser doesn\'t support HTML5 video tag.';
-												echo '</video>';
-											}
-
-											echo '<div class="valign-wrapper dt_prof_ply_ico"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M10,16.5V7.5L16,12M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" /></svg></div>';
-										}else{
-											echo '<a class="inline" href="' . $value['full'] . '" data-fancybox="gallery" data-id="' . $value['id'] . '" data-private="' . $private . '" data-avater="' . $is_avater . '">';
-										}
-										echo '<img src="' . $avater . '" alt="' . $profile->username . '">';
-										echo '</a>';
-										echo '</div>';
-									} else {
-										if($config->review_media_files == '0' && $value['is_approved'] == 1) {
-											echo '<div class="dt_cp_l_photos">';
-											if( $value['is_video'] == "1" ){
-
-											if ($value['is_private'] == 1 && $matched === false) {
-												echo '<a class="inline" href="' . $avater . '" data-fancybox="gallery" data-id="' . $value['id'] . '" data-private="' . $private . '" data-avater="' . $is_avater . '">';
-											}else{
-												echo '<a class="inline" href="#myVideo_'.$value['id'].'" data-fancybox="gallery" data-id="' . $value['id'] . '" data-video="' . $value['is_video'] . '" data-private="' . $private . '" data-avater="' . $is_avater . '">';
-												echo '<video width="800" height="550" controls id="myVideo_'.$value['id'].'" style="display:none;">';
-												echo '    <source src="'.$video_file.'" type="video/mp4">';
-												echo '    Your browser doesn\'t support HTML5 video tag.';
-												echo '</video>';
-											}
-
-											echo '<div class="valign-wrapper dt_prof_ply_ico"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M10,16.5V7.5L16,12M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" /></svg></div>';
-											}else{
-												if ($value['is_private'] == 0){
-													$avater = $value['full'];
-                                                }
-												echo '<a class="inline" href="' . $avater . '" data-fancybox="gallery" data-id="' . $value['id'] . '" data-private="' . $private . '" data-avater="' . $is_avater . '">';
-											}
-											echo '<img src="' . $avater . '" alt="' . $profile->username . '">';
-											echo '</a>';
-											echo '</div>';
-										}
-									}
-								}
-							}
-						}
-					?>
-				</div>
+				
 				<div class="to_usr_info_block to_usr_info_things">
 					<h5><?php echo __( 'Profile Info ' );?></h5>
 					<div class="dt_profile_info">
