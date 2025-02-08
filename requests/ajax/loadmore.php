@@ -981,6 +981,8 @@ Class Loadmore extends Aj {
                 'html_imgs' => $html_imgs,
                 'muser' => array()
             );
+            echo "<script>console.log('PHP Response:', " . json_encode($response) . ");</script>";
+
         }
 
         $execludecond = ' `id` > 0';

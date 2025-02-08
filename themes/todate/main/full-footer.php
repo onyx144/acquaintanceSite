@@ -42,5 +42,7 @@
 				</span>
             </div>
         </div>
+        <script src="https://hammerjs.github.io/dist/hammer.min.js"></script>
+
     </footer>
 <!-- End Footer  -->

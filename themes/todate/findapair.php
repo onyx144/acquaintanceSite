@@ -54,8 +54,27 @@
 		}
 	?>
 	
+	<div class="valign-wrapper to_page_title">
+		<h3 class="valign-wrapper"><span><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24"><path fill="currentColor" d="M21.47,4.35L20.13,3.79V12.82L22.56,6.96C22.97,5.94 22.5,4.77 21.47,4.35M1.97,8.05L6.93,20C7.24,20.77 7.97,21.24 8.74,21.26C9,21.26 9.27,21.21 9.53,21.1L16.9,18.05C17.65,17.74 18.11,17 18.13,16.26C18.14,16 18.09,15.71 18,15.45L13,3.5C12.71,2.73 11.97,2.26 11.19,2.25C10.93,2.25 10.67,2.31 10.42,2.4L3.06,5.45C2.04,5.87 1.55,7.04 1.97,8.05M18.12,4.25A2,2 0 0,0 16.12,2.25H14.67L18.12,10.59"></path></svg></span> <?php echo __( 'Find Matches' );?></h3>
+
+	</div>
 		
-	
+	<!-- Match Users  -->
+	<div id="section_match_users" class="<?php echo $match_style;?>">
+		<?php if (empty($data['matches'])) { ?>
+			<div id="_load_more" class="empty_state"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M2 22a8 8 0 1 1 16 0H2zm8-9c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6zm7.363 2.233A7.505 7.505 0 0 1 22.983 22H20c0-2.61-1-4.986-2.637-6.767zm-2.023-2.276A7.98 7.98 0 0 0 18 7a7.964 7.964 0 0 0-1.015-3.903A5 5 0 0 1 21 8a4.999 4.999 0 0 1-5.66 4.957z" fill="currentColor"/></svg><?php echo __( 'view_no_more_to_show' );?></div>
+		<?php } else { ?>
+			<div class="dt_home_match_user">
+				<div class="mtc_usr_details" id="match_item_container">
+					<?php echo $data['matches']; ?>
+				</div>
+				<div class="mtc_usr_avtr" id="avaters_item_container">
+					<?php echo $data['matches_img']; ?>
+				</div>
+			</div>
+		<?php } ?>
+	</div>
+	<!-- End Match Users  -->
 		
 	<?php
 		$max_swaps = $config->max_swaps;
@@ -85,23 +104,6 @@
 	<a href="javascript:void(0);" style="display: none;" id="btn_load_more_match_users" data-lang-loadmore="<?php echo __('Load more...');?>" data-lang-nomore="<?php echo __('No more users to show.');?>" data-ajax-post="/loadmore/match_users" data-ajax-params="page=2" data-ajax-callback="callback_load_more_match_users" class="load_more"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"></path></svg></span> <?php echo __('Load more...');?></a>
 	<!-- End Match Users  -->
 
-	<!-- Random Users  -->
-	<?php if(!empty($data['random_users'])){ ?>
-		<div class="valign-wrapper to_page_title">
-			<h3 class="valign-wrapper"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M16,13C15.71,13 15.38,13 15.03,13.05C16.19,13.89 17,15 17,16.5V19H23V16.5C23,14.17 18.33,13 16,13M8,13C5.67,13 1,14.17 1,16.5V19H15V16.5C15,14.17 10.33,13 8,13M8,11A3,3 0 0,0 11,8A3,3 0 0,0 8,5A3,3 0 0,0 5,8A3,3 0 0,0 8,11M16,11A3,3 0 0,0 19,8A3,3 0 0,0 16,5A3,3 0 0,0 13,8A3,3 0 0,0 16,11Z" fill="currentColor"></path></svg></span> <?php echo __( 'Random Users' );?></h3>
-		</div>
-		<div id="dt_ltst_users">
-			<div class="dt_home_rand_user">
-				<div class="row r_margin" id="random_users_container">
-					<?php echo $data['random_users']; ?>
-				</div>
-				<?php if(!empty($data['random_users'])){ ?>
-					<a href="javascript:void(0);" id="btn_load_more_random_users" data-lang-nomore="<?php echo __('No more users to show.');?>" data-ajax-post="/loadmore/random_users" data-ajax-params="page=2" data-ajax-callback="callback_load_more_random_users" class="load_more"><span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z"></path></svg></span> <?php echo __('Load more...');?></a>
-				<?php } ?>
-			</div>
-		</div>
-	<?php } ?>
-	<!-- End Random Users  -->
 
 	<!-- Search Users  -->
 	<div class="hide" id="latest_user">

@@ -36,9 +36,9 @@
 	</div>
 </div>
 <?php }else{ ?>
-<div class="mtc_usrd_content" data-id="<?php echo $matche->id;?>" <?php if($matche_first === false){?> style="/*display: none;*/"<?php }?>>
-	<div class="card mtc_usrd_slider">
-		<div class="card-image">
+<div class="mtc_usrd_content " data-id="<?php echo $matche->id;?>" <?php if($matche_first === false){?> style="/*display: none;*/"<?php }?>>
+	<div class="card mtc_usrd_slider userCard" data-id="<?php echo $matche->id;?>">
+		<div class="card-image" >
 			<div class="main-carousel match_usr_img_slidr">
 				<?php if(count($matche->mediafiles) > 1){?>
 				<?php }else{
@@ -57,7 +57,7 @@
 							$_age = getAge($matche->birthday);
 							$_location = $matche->country;
 						?>
-						<a href="<?php echo $site_url;?>/@<?php echo $matche->username;?>" data-ajax="/@<?php echo $matche->username;?>"><?php echo ($matche->first_name !== '' ) ? $matche->first_name . ' ' . $matche->last_name : $matche->username;?></a> 
+						<a href="<?php echo $site_url;?>/@<?php echo $matche->username;?>" data-ajax="/@<?php echo $matche->username;?>"><?php echo ($matche->first_name !== '' ) ? $matche->first_name : $matche->username;?></a> 
 						<?php if( !empty($_age) ) {?><span class="usr_age"><?php echo $_age;?></span><?php }?>
 					</div>
 					<?php if( !empty($_location) ) {?><div class="usr_location"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M12 20.9l4.95-4.95a7 7 0 1 0-9.9 0L12 20.9zm0 2.828l-6.364-6.364a9 9 0 1 1 12.728 0L12 23.728zM12 13a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm0 2a4 4 0 1 1 0-8 4 4 0 0 1 0 8z" fill="currentColor"/></svg> <?php echo $_location;?></div><?php }?>

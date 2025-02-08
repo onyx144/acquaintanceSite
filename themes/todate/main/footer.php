@@ -727,6 +727,7 @@
 				$('#pop_up_18').modal('open');
 			});
 	</script>
+
 <?php } ?>
 </body>
 </html>

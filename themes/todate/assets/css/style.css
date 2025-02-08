@@ -15,6 +15,53 @@ body {
 body#white {
     background-color: #fff;
 }
+.container.top {
+    margin-top: 80px;
+}
+.swipe-card {
+    width: 100%;
+    height: 400px; /* или другой размер */
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .mtc_usr_details .mtc_usrd_content:not(:first-child) {
+    display: none;
+}
+  .swipe-left {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  
+  .swipe-right {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  
+.swipe-findapair-container {
+    width: 300px;
+    height: 400px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .swipe-findapair-card {
+    width: 100%;
+    height: 100%;
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+  }
 
 body>#container {
     min-height: calc(100vh - 145px);
@@ -2442,6 +2489,10 @@ footer.page_footer:not(.to_index_foot) {
     z-index: 2;
     text-align: center;
 }
+.btn.btn-flat.min svg {
+    width: 17px;
+    height: 17px;
+}
 .btn.btn-flat.min {
     font-size: 30px;
     padding: 10px;
@@ -3403,11 +3454,11 @@ p.slider-name svg {
 .mtc_usrd_content .mtc_usrd_slider .card-content {
     padding: 0;
     position: absolute;
-    top: 30px;
     right: 10px;
     border-radius: 50%;
     z-index: 10;
     width: 25px;
+    top: 17px;
     height: 25px;
     opacity: 0;
     visibility: hidden;
@@ -3435,9 +3486,11 @@ p.slider-name svg {
 
 .mtc_usrd_content .mtc_usrd_top {
     position: absolute;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5));
-    bottom: 0;
+    /* background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.5)); */
+    bottom: 0px;
     right: 0;
+    top: -55px;
+    /* top: 232px; */
     left: 0;
     z-index: 9;
     border-radius: 7px 7px 0 0;
@@ -3537,7 +3590,7 @@ p.slider-name svg {
 .mtc_usrd_content .mtc_usrd_actions {
     text-align: center;
     padding-bottom: 5px;
-    margin-top: 18px;
+    margin-top: -70px;
     z-index: 9;
     position: relative;
     opacity: 0;

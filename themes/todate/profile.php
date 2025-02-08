@@ -126,7 +126,15 @@ if($matched_count[0]['cnt'] == 2){
 				<?php if(!empty($user) ) {?>
 				<div class="dt_user_pro_info">
 				<a class="btn btn-flat min" href="javascript:void(0);" id="btn_delete_friend" data-ajax-post="/profile/add_friend" data-ajax-params="to=<?php echo $profile->id;?>" data-ajax-callback="callback_add_friend" title="<?php echo __( 'UnFriend' );?>">
-							<
+				<svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    viewBox="0 0 306 306" 
+    width="306" 
+    height="306" 
+    fill="currentColor">
+    
+    <polygon points="247.35,35.7 211.65,0 58.65,153 211.65,306 247.35,270.3 130.05,153"/>
+</svg>
 					</a>
 					<?php if( $config->connectivitySystem == "1" && ( Wo_IsFollowing($profile->id, $user->id) || Wo_IsFollowing($user->id, $profile->id) ) ){ ?>
 						<a class="btn btn-flat" href="javascript:void(0);" id="btn_delete_friend" data-ajax-post="/profile/add_friend" data-ajax-params="to=<?php echo $profile->id;?>" data-ajax-callback="callback_add_friend" title="<?php echo __( 'UnFriend' );?>">
@@ -162,6 +170,21 @@ if($matched_count[0]['cnt'] == 2){
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M10 3h4a8 8 0 1 1 0 16v3.5c-5-2-12-5-12-11.5a8 8 0 0 1 8-8zm2 14h2a6 6 0 1 0 0-12h-4a6 6 0 0 0-6 6c0 3.61 2.462 5.966 8 8.48V17z" fill="#2196f3"></path></svg>
 						</a>
 					<?php }?>
+					<a class="btn btn-flat min" href="javascript:void(0);" id="btn_delete_friend" data-ajax-post="/profile/add_friend" data-ajax-params="to=<?php echo $profile->id;?>" data-ajax-callback="callback_add_friend" title="<?php echo __( 'UnFriend' );?>">
+					<svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    viewBox="0 0 128 128" 
+    width="128" 
+    height="128" 
+    fill="none" 
+    stroke="currentColor" 
+    stroke-width="12" 
+    stroke-linecap="square" 
+    stroke-miterlimit="10">
+    
+    <line x1="40.5" y1="17" x2="87.5" y2="64"/>
+    <line x1="87.5" y1="64" x2="40.5" y2="111"/>
+</svg>					</a>
 				</div>
 				<?php } ?>
 				<?php echo GetAd('profile_side_bar');?>

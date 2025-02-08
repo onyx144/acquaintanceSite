@@ -1,7 +1,7 @@
 <?php
-Class FindMatches extends Theme {
-    public static $page_data = array('title' => 'Find Matches');
-    public static $partial = 'find-matches';
+Class Findapair extends Theme {
+    public static $page_data = array('title' => 'Find a Pair');
+    public static $partial = 'findapair';
 
     public static function init_data() {
         global $config, $db;
@@ -11,10 +11,7 @@ Class FindMatches extends Theme {
         parent::$data['keywords'] = GetPageKeyword(self::$partial);
         parent::$data['description'] = GetPageDescription(self::$partial);
 
-        // if (isset(self::$page_data['title']) && self::$page_data['title'] !== '') {
-        //     parent::$data['title'] = ucfirst(__('Find Matches')) . ' . ' . $config->site_name;
-        // }
-        parent::$data['name']         = self::$partial;
+        parent::$data['name'] = self::$partial;
 
         self::LoadMatches();
 
@@ -23,14 +20,15 @@ Class FindMatches extends Theme {
         parent::$data['random_users'] = self::RandomUsers();
         parent::$data['find_match_data'] = array();
         if (!empty(auth()->find_match_data)) {
-            parent::$data['find_match_data'] = json_decode(auth()->find_match_data,true);
+            parent::$data['find_match_data'] = json_decode(auth()->find_match_data, true);
         }
-
     }
+
     public static function show($partial = '') {
         self::init_data();
         parent::show(self::$partial);
     }
+
     public static function LoadMatches() {
         global $_AJAX, $_CONTROLLERS;
         $data            = '';
@@ -43,10 +41,7 @@ Class FindMatches extends Theme {
             $loadmore      = new Loadmore();
             if (!empty(auth()) && empty(auth()->lat) && empty(auth()->lng)) {
                 $match_users   = array();
-                echo "<script>console.log('PHP Response:');</script>";
-
-            }
-            else{
+            } else {
                 $match_users   = $loadmore->match_users();
             }
             parent::$data['matches_data'] = $match_users;
@@ -61,6 +56,7 @@ Class FindMatches extends Theme {
         }
         return $data;
     }
+
     public static function Matches_img() {
         $data = '';
         if (isset(parent::$data['matches_data']['html_imgs'])) {
@@ -68,6 +64,7 @@ Class FindMatches extends Theme {
         }
         return $data;
     }
+
     public static function RandomUsers() {
         global $_AJAX, $_CONTROLLERS;
         $data            = '';

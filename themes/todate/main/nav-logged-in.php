@@ -59,7 +59,7 @@
 					<?php } //фильтр хедер
 					?>
 					<?php
-if (basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)) === 'find-matches') { ?>
+if (in_array(basename(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)), ['findapair'])) { ?>
     <li>
         <a href="#filtr_slide_out" class="btn btn_primary modal-trigger" title="<?php echo $_gender_text; ?> <?php echo __('who ages'); ?> <?php echo $_age_from; ?> <?php echo $_age_to; ?> 
         <?php if (!empty($data['find_match_data']) && !empty($data['find_match_data']['located'])) { ?>

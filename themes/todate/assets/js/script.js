@@ -1680,3 +1680,65 @@ $(document).ready(initSlider);
 $(document).ajaxComplete(function() {
     initSlider();
 });
+
+
+
+//Свайп пальцем
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Получаем все карточки пользователей
+    const userCards = document.querySelectorAll('.userCard');
+
+    userCards.forEach(userCard => {
+        // Добавляем обработчик жестов для каждой карточки
+        const hammer = new Hammer(userCard);
+
+        // Обрабатываем свайпы влево (отказ) и вправо (согласие)
+        hammer.on('swipeleft', function() {
+            userCard.classList.add('swiped-left');
+            setTimeout(() => {
+                console.log('Свайп влево: Отклонено');
+            }, 300);
+        });
+
+        
+
+        // Обрабатываем возврат карты на место
+        hammer.on('pan', function(e) {
+            var moveX = e.deltaX;
+            userCard.style.transform = 'translateX(' + moveX + 'px)';
+        });
+
+        hammer.on('panend', function(e) {
+            if (Math.abs(e.deltaX) > 150) {
+                if (e.deltaX > 0) {
+                    userCard.classList.add('swiped-right');
+                    console.log('Свайп вправо: Принято');
+                    const userId = userCard.getAttribute('data-id'); 
+                    const button = document.querySelector(`#matches_like_btn[data-userid="${userId}"]`);
+                    console.log('Тест' , userId);
+                    console.log('Кнопка' , button);
+                    if (button) {
+                        // Отправляем клик на кнопку
+                        button.click();
+                        console.log('Тест');
+
+                    }
+                } else {
+                    userCard.classList.add('swiped-left');
+                    console.log('Свайп влево: Отклонено');
+                    const userId = userCard.getAttribute('data-id'); 
+                    const button = document.querySelector(`#matches_dislike_btn[data-userid="${userId}"]`);
+                
+                    if (button) {
+                    // Отправляем клик на кнопку
+                    button.click();
+                }
+                }
+            } else {
+                userCard.style.transform = 'translateX(0)';
+            }
+        });
+    });
+});
+
