@@ -67,7 +67,21 @@
 		<div class="card-content">
 			<span class="card-title activator"></span>
 		</div>
-		<div class="card-reveal">
+		
+	<script src="https://unpkg.com/flickity@2.2.1/dist/flickity.pkgd.min.js"></script>
+	<script>
+		$('.match_usr_img_slidr').flickity({
+			prevNextButtons: false
+		});
+	</script>
+	<?php if( Auth()->verified == "1" ) { ?>
+		<div class="mtc_usrd_actions">
+			<button href="javascript:void(0);" data-userid="<?php echo $matche->id;?>" id="matches_dislike_btn" data-ajax-post="/useractions/dislike" data-source="find-matches" data-ajax-params="userid=<?php echo $matche->id;?>&username=<?php echo $matche->username;?>&source=find-matches" data-ajax-callback="callback_dislike" class="btn waves-effect dislike"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path></svg></button>
+			<button href="javascript:void(0);" data-userid="<?php echo $matche->id;?>" id="matches_like_btn" data-ajax-post="/useractions/like" data-ajax-params="userid=<?php echo $matche->id;?>&username=<?php echo $matche->username;?>&source=find-matches" data-ajax-callback="callback_like" class="btn waves-effect like"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M2.821 12.794a6.5 6.5 0 0 1 7.413-10.24h-.002L5.99 6.798l1.414 1.414 4.242-4.242a6.5 6.5 0 0 1 9.193 9.192L12 22l-9.192-9.192.013-.014z" fill="currentColor"/></svg></button>
+		</div>
+	<?php } ?>
+</div>
+<div class="card-add-info">
 			<span class="card-title"></span>
 			<div class="mtc_usrd_sidebar">
                 <div class="sidebar_usr_info">
@@ -118,17 +132,4 @@
             </div>
 		</div>
 	</div>
-	<script src="https://unpkg.com/flickity@2.2.1/dist/flickity.pkgd.min.js"></script>
-	<script>
-		$('.match_usr_img_slidr').flickity({
-			prevNextButtons: false
-		});
-	</script>
-	<?php if( Auth()->verified == "1" ) { ?>
-		<div class="mtc_usrd_actions">
-			<button href="javascript:void(0);" data-userid="<?php echo $matche->id;?>" id="matches_dislike_btn" data-ajax-post="/useractions/dislike" data-source="find-matches" data-ajax-params="userid=<?php echo $matche->id;?>&username=<?php echo $matche->username;?>&source=find-matches" data-ajax-callback="callback_dislike" class="btn waves-effect dislike"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"></path></svg></button>
-			<button href="javascript:void(0);" data-userid="<?php echo $matche->id;?>" id="matches_like_btn" data-ajax-post="/useractions/like" data-ajax-params="userid=<?php echo $matche->id;?>&username=<?php echo $matche->username;?>&source=find-matches" data-ajax-callback="callback_like" class="btn waves-effect like"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path d="M2.821 12.794a6.5 6.5 0 0 1 7.413-10.24h-.002L5.99 6.798l1.414 1.414 4.242-4.242a6.5 6.5 0 0 1 9.193 9.192L12 22l-9.192-9.192.013-.014z" fill="currentColor"/></svg></button>
-		</div>
-	<?php } ?>
-</div>
 <?php } ?>

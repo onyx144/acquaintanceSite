@@ -1,6 +1,11 @@
 <?php global $db,$_LIBS; ?>
 <!-- Pro Users  -->
 <div class="container page-margin">
+    <style>
+      .to_pro_users {
+    display: none;
+}  
+    </style>
 	<?php if(IS_LOGGED && !empty($profile) && $profile->verified !== "1") { ?>
 		<div class="alert alert-warning"><?php echo __('account_not_verified_text'); ?></div>
 	<?php } ?>
